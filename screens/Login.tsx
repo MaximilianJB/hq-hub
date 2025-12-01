@@ -45,48 +45,21 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
         }} 
       />
 
-      {/* Left Panel: Map Visualization */}
+      {/* Left Panel: House Outline */}
       <div className="flex-1 flex items-center justify-center p-8 md:p-12 relative border-b md:border-b-0 md:border-r border-zinc-800 bg-zinc-950/50">
         
-        {/* Stylized Street Map Container */}
+        {/* House Outline Container */}
         <div className="relative w-full max-w-md aspect-square bg-[#09090b] rounded-xl border border-zinc-800 overflow-hidden shadow-2xl group">
            
-           {/* Map Graphics (SVG Streets) */}
-           <div className="absolute inset-0 opacity-20">
-             <svg className="w-full h-full" viewBox="0 0 400 400" preserveAspectRatio="none">
-                {/* Streets */}
-                <path d="M-10 100 L410 100" stroke="currentColor" strokeWidth="2" fill="none" className="text-zinc-600" />
-                <path d="M-10 250 L410 250" stroke="currentColor" strokeWidth="2" fill="none" className="text-zinc-600" />
-                <path d="M100 -10 L100 410" stroke="currentColor" strokeWidth="2" fill="none" className="text-zinc-600" />
-                <path d="M280 -10 L280 410" stroke="currentColor" strokeWidth="2" fill="none" className="text-zinc-600" />
-                
-                {/* Smaller Streets */}
-                <path d="M-10 180 L280 180" stroke="currentColor" strokeWidth="1" fill="none" className="text-zinc-700" />
-                <path d="M100 320 L410 320" stroke="currentColor" strokeWidth="1" fill="none" className="text-zinc-700" />
-                <path d="M180 100 L180 250" stroke="currentColor" strokeWidth="1" fill="none" className="text-zinc-700" />
-             </svg>
+           {/* House Outline */}
+           <div className="absolute inset-0">
+             <img src="/HouseOutline.png" alt="Map" className="w-full h-full object-cover" />
            </div>
 
-           {/* Location Marker */}
-           <div className="absolute top-[35%] left-[45%] flex flex-col items-center transform transition-transform duration-500 group-hover:-translate-y-2">
-             <div className="relative">
-                <div className="absolute -inset-4 bg-hq-green/20 rounded-full animate-pulse" />
-                <MapPin className="w-8 h-8 text-hq-green relative z-10 fill-hq-green/20" />
-             </div>
-             <div className="mt-2 bg-zinc-900/90 backdrop-blur px-3 py-1 rounded border border-zinc-700 shadow-lg">
-                <span className="font-mono text-[10px] font-bold text-white uppercase tracking-wider">The HQ</span>
-             </div>
-           </div>
-
-           {/* Map UI Overlay */}
-           <div className="absolute top-4 left-4 bg-black/60 backdrop-blur border border-zinc-800 px-3 py-1.5 rounded flex items-center gap-2">
-             <div className="w-2 h-2 rounded-full bg-hq-green animate-pulse" />
-             <span className="font-mono text-[10px] text-zinc-300">LIVE FEED</span>
-           </div>
-
+           {/* LAT/LNG Overlay */}
            <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur border border-zinc-800 px-3 py-1.5 rounded text-right">
-             <div className="font-mono text-[10px] text-zinc-400">LAT: 34.0522° N</div>
-             <div className="font-mono text-[10px] text-zinc-400">LNG: 118.2437° W</div>
+             <div className="font-mono text-[10px] text-zinc-400">LAT: 41.6059° N</div>
+             <div className="font-mono text-[10px] text-zinc-400">LNG: -93.6967° W</div>
            </div>
         </div>
       </div>
@@ -164,7 +137,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                 <div className="bg-zinc-900 border border-zinc-800 p-4 col-span-2 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                          <div className="bg-zinc-800 p-2 rounded-full">
-                            <Home className="w-4 h-4 text-hq-blue" />
+                            <Home className="w-4 h-4 text-hq-green" />
                          </div>
                          <div>
                              <div className="font-sans font-bold text-sm uppercase">1508 57th PL</div>
