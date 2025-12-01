@@ -1,6 +1,7 @@
 
-import React, { useState } from 'react';
-import { MapPin, ArrowRight, Users, Cloud, Clock, Home } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { MapPin, ArrowRight, Users, Cloud, Clock, Home, Sun, Moon, CloudRain, Snowflake } from 'lucide-react';
+import { fetchWeather, WeatherData } from '../utils/weather';
 
 interface LoginProps {
   onLogin: () => void;
@@ -8,6 +9,23 @@ interface LoginProps {
 
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [loading, setLoading] = useState(false);
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [weatherLoading, setWeatherLoading] = useState(true);
+
+  useEffect(() => {
+    const loadWeather = async () => {
+      try {
+        const data = await fetchWeather();
+        setWeather(data);
+      } catch (error) {
+        console.error('Failed to fetch weather:', error);
+      } finally {
+        setWeatherLoading(false);
+      }
+    };
+
+    loadWeather();
+  }, []);
 
   const handleEnter = () => {
     setLoading(true);
@@ -83,7 +101,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                     HQ<span className="text-hq-green">.OS</span>
                 </h1>
                 <p className="text-zinc-400 font-mono text-sm">
-                    Residential Operating System v2.4
+                    Residential Operating System v1.0
                 </p>
             </div>
 
@@ -95,8 +113,37 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                         <Cloud className="w-3 h-3" /> External
                     </div>
                     <div>
-                        <div className="font-sans text-xl font-bold">72°F</div>
-                        <div className="font-mono text-[10px] text-zinc-500">Clear Sky</div>
+                        {weatherLoading ? (
+                            <div className="font-sans text-xl font-bold text-zinc-600">Loading...</div>
+                        ) : weather ? (
+                            <>
+                                <div className="flex items-center gap-2">
+                                    <div className="font-sans text-xl font-bold">
+                                        {Math.round(weather.current.temperature_2m)}°F
+                                    </div>
+                                    {weather.current.is_day === 1 ? (
+                                        <Sun className="w-4 h-4 text-yellow-400" />
+                                    ) : (
+                                        <Moon className="w-4 h-4 text-blue-300" />
+                                    )}
+                                    {(weather.current.rain > 0 || weather.current.showers > 0) && (
+                                        <CloudRain className="w-4 h-4 text-blue-400" />
+                                    )}
+                                    {weather.current.snowfall > 0 && (
+                                        <Snowflake className="w-4 h-4 text-cyan-300" />
+                                    )}
+                                </div>
+                                <div className="font-mono text-[10px] text-zinc-500">
+                                    {weather.current.rain > 0 || weather.current.showers > 0
+                                        ? 'Rain'
+                                        : weather.current.snowfall > 0
+                                        ? 'Snow'
+                                        : 'Clear Sky'}
+                                </div>
+                            </>
+                        ) : (
+                            <div className="font-sans text-xl font-bold text-zinc-600">Error</div>
+                        )}
                     </div>
                 </div>
 
@@ -109,7 +156,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                         <div className="font-sans text-xl font-bold">
                             {new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                         </div>
-                        <div className="font-mono text-[10px] text-zinc-500">PST</div>
+                        <div className="font-mono text-[10px] text-zinc-500">CST</div>
                     </div>
                 </div>
 
@@ -120,8 +167,8 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
                             <Home className="w-4 h-4 text-hq-blue" />
                          </div>
                          <div>
-                             <div className="font-sans font-bold text-sm uppercase">House Status</div>
-                             <div className="font-mono text-[10px] text-zinc-500">Lease Active • Rent Paid</div>
+                             <div className="font-sans font-bold text-sm uppercase">1508 57th PL</div>
+                             <div className="font-mono text-[10px] text-zinc-500">Des Moines, IA</div>
                          </div>
                     </div>
                     <div className="flex -space-x-2">
