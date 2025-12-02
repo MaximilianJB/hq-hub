@@ -9,7 +9,7 @@ import {
   Hammer, 
   TrendingUp, 
   Receipt,
-  UserCircle
+  Settings
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -26,7 +26,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentScreen, setScreen }) => {
     { id: 'UPGRADES', label: 'Upgrades', icon: <Hammer className="w-6 h-6" /> },
     { id: 'SHARK_TANK', label: 'Shark Tank', icon: <TrendingUp className="w-6 h-6" /> },
     { id: 'RECEIPTS', label: 'Receipts', icon: <Receipt className="w-6 h-6" /> },
-    { id: 'PROFILE', label: 'User Profile', icon: <UserCircle className="w-6 h-6" /> },
   ];
 
   return (
@@ -35,7 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ currentScreen, setScreen }) => {
         <h1 className="text-3xl font-sans font-bold tracking-tighter text-white">
           HQ<span className="text-hq-green">.OS</span>
         </h1>
-        <span className="text-hq-green font-mono text-xs">v2.4.0-STABLE</span>
+        <span className="text-hq-green font-mono text-xs">v1.0.0-STABLE</span>
       </div>
 
       <div className="flex-1 overflow-y-auto py-4">
@@ -62,10 +61,30 @@ const Sidebar: React.FC<SidebarProps> = ({ currentScreen, setScreen }) => {
         ))}
       </div>
 
-      <div className="p-6 border-t border-zinc-800">
-        <div className="flex items-center gap-3">
-          <div className="w-2 h-2 rounded-full bg-hq-green animate-pulse-fast" />
-          <span className="text-xs font-mono text-zinc-500">SYSTEM ONLINE</span>
+      <div className="border-t border-zinc-800">
+        <button
+          onClick={() => setScreen('PROFILE')}
+          className={`w-full flex items-center gap-4 px-6 py-4 transition-all duration-200 group relative
+            ${currentScreen === 'PROFILE' 
+              ? 'text-hq-green bg-zinc-900/50' 
+              : 'text-zinc-400 hover:text-white hover:bg-zinc-900'
+            }`}
+        >
+          {currentScreen === 'PROFILE' && (
+            <div className="absolute left-0 top-0 bottom-0 w-1 bg-hq-green shadow-[0_0_10px_#a3e635]" />
+          )}
+          <div className={`transition-transform duration-300 ${currentScreen === 'PROFILE' ? 'scale-110' : 'group-hover:scale-110'}`}>
+            <Settings className="w-6 h-6" />
+          </div>
+          <span className="font-mono text-sm tracking-wider uppercase">
+            System Settings
+          </span>
+        </button>
+        <div className="p-6">
+          <div className="flex items-center gap-3">
+            <div className="w-2 h-2 rounded-full bg-hq-green animate-pulse-fast" />
+            <span className="text-xs font-mono text-zinc-500">SYSTEM ONLINE</span>
+          </div>
         </div>
       </div>
     </nav>

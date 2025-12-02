@@ -12,6 +12,7 @@ import SharkTank from './screens/SharkTank';
 import Receipts from './screens/Receipts';
 import Profile from './screens/Profile';
 import Login from './screens/Login';
+import UnderConstruction from './screens/UnderConstruction';
 import { useAuth } from './contexts/AuthContext';
 
 export default function App() {
@@ -38,16 +39,17 @@ export default function App() {
   // Determine which screen component to render
   const renderScreen = () => {
     switch (currentScreen) {
-      case 'COMMAND': return <HQCommand />;
-      case 'THE_MOVE': return <TheMove />;
-      case 'THE_GRIND': return <TheGrind />;
-      case 'THE_STASH': return <TheStash />;
-      case 'UPGRADES': return <Upgrades />;
-      case 'SHARK_TANK': return <SharkTank />;
-      case 'RECEIPTS': return <Receipts />;
       case 'PROFILE': 
         return <Profile />;
-      default: return <HQCommand />;
+      case 'COMMAND': 
+      case 'THE_MOVE': 
+      case 'THE_GRIND': 
+      case 'THE_STASH': 
+      case 'UPGRADES': 
+      case 'SHARK_TANK': 
+      case 'RECEIPTS': 
+      default: 
+        return <UnderConstruction />;
     }
   };
 

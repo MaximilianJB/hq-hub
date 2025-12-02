@@ -11,7 +11,7 @@ import {
   Receipt,
   Menu,
   X,
-  UserCircle
+  Settings
 } from 'lucide-react';
 
 interface MobileNavProps {
@@ -40,7 +40,7 @@ const MobileNav: React.FC<MobileNavProps> = ({ currentScreen, setScreen }) => {
     { id: 'UPGRADES', label: 'Upgrades', icon: <Hammer className="w-5 h-5" />, color: 'text-white' },
     { id: 'SHARK_TANK', label: 'Shark Tank', icon: <TrendingUp className="w-5 h-5" />, color: 'text-red-500' },
     { id: 'RECEIPTS', label: 'Receipts', icon: <Receipt className="w-5 h-5" />, color: 'text-zinc-400' },
-    { id: 'PROFILE', label: 'Profile', icon: <UserCircle className="w-5 h-5" />, color: 'text-zinc-200' },
+    { id: 'PROFILE', label: 'System Settings', icon: <Settings className="w-5 h-5" />, color: 'text-zinc-200' },
   ];
 
   const toggleMenu = () => {
