@@ -12,23 +12,27 @@ import SharkTank from './screens/SharkTank';
 import Receipts from './screens/Receipts';
 import Profile from './screens/Profile';
 import Login from './screens/Login';
+import { useAuth } from './contexts/AuthContext';
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { user, loading } = useAuth();
   const [currentScreen, setCurrentScreen] = useState<ScreenName>('COMMAND');
 
-  const handleLogin = () => {
-    setIsLoggedIn(true);
-  };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    setCurrentScreen('COMMAND');
-  };
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-hq-black text-white font-sans flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-8 h-8 border-2 border-hq-green border-t-transparent rounded-full animate-spin" />
+          <span className="font-mono text-xs text-zinc-400 uppercase tracking-widest">Authenticating...</span>
+        </div>
+      </div>
+    );
+  }
 
   // If not logged in, show the Login Screen
-  if (!isLoggedIn) {
-    return <Login onLogin={handleLogin} />;
+  if (!user) {
+    return <Login />;
   }
 
   // Determine which screen component to render
@@ -42,17 +46,7 @@ export default function App() {
       case 'SHARK_TANK': return <SharkTank />;
       case 'RECEIPTS': return <Receipts />;
       case 'PROFILE': 
-        // Pass logout handler to Profile if needed, or handle it via context in a larger app
-        // For now, we can modify Profile to accept a logout prop, 
-        // OR simpler: wrapper component. 
-        // Let's modify the props passed to Profile or cloneElement
-        // But Profile.tsx currently doesn't accept props. 
-        // We will just render it, and assume the button inside does nothing 
-        // UNLESS we pass the prop.
-        // Let's pass it implicitly for now or just let the button in Profile be visual 
-        // UNLESS I update Profile.tsx. 
-        // Actually, let's just pass a prop to Profile for logout.
-        return <Profile onLogout={handleLogout} />;
+        return <Profile />;
       default: return <HQCommand />;
     }
   };

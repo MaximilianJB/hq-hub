@@ -2,12 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, ArrowRight, Users, Cloud, Clock, Home, Sun, Moon, CloudRain, Snowflake } from 'lucide-react';
 import { fetchWeather, WeatherData } from '../utils/weather';
+import { useAuth } from '../contexts/AuthContext';
 
-interface LoginProps {
-  onLogin: () => void;
-}
-
-const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login: React.FC = () => {
+  const { signIn } = useAuth();
   const [loading, setLoading] = useState(false);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [weatherLoading, setWeatherLoading] = useState(true);
@@ -27,11 +25,16 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     loadWeather();
   }, []);
 
-  const handleEnter = () => {
+  const handleEnter = async () => {
     setLoading(true);
-    setTimeout(() => {
-      onLogin();
-    }, 800);
+    try {
+      await signIn();
+      // The OAuth flow will redirect, so we don't need to handle success here
+    } catch (error) {
+      console.error('Sign in error:', error);
+      setLoading(false);
+      // You could add error handling UI here if needed
+    }
   };
 
   return (
