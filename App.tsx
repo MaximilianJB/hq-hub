@@ -13,10 +13,12 @@ import Receipts from './screens/Receipts';
 import Profile from './screens/Profile';
 import Login from './screens/Login';
 import UnderConstruction from './screens/UnderConstruction';
+import Onboarding from './screens/Onboarding';
+import PendingInvitation from './screens/PendingInvitation';
 import { useAuth } from './contexts/AuthContext';
 
 export default function App() {
-  const { user, loading } = useAuth();
+  const { user, loading, needsOnboarding, houseState } = useAuth();
   const [currentScreen, setCurrentScreen] = useState<ScreenName>('COMMAND');
 
   // Show loading state while checking authentication
@@ -34,6 +36,16 @@ export default function App() {
   // If not logged in, show the Login Screen
   if (!user) {
     return <Login />;
+  }
+
+  // If needs onboarding, show Onboarding Screen
+  if (needsOnboarding) {
+    return <Onboarding />;
+  }
+
+  // If waiting for invitation or not assigned to house yet
+  if (houseState !== 'ROOMATE') {
+    return <PendingInvitation />;
   }
 
   // Determine which screen component to render
@@ -55,6 +67,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-hq-black text-white font-sans flex overflow-hidden selection:bg-hq-green selection:text-black">
+      
       {/* Desktop Sidebar */}
       <Sidebar currentScreen={currentScreen} setScreen={setCurrentScreen} />
       

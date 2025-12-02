@@ -9,6 +9,23 @@ export type ScreenName =
   | 'RECEIPTS'
   | 'PROFILE';
 
+export interface UserProfile {
+  id: string;
+  email: string;
+  full_name: string;
+  avatar_url: string;
+  phone?: string;
+  created_at?: string;
+}
+
+export interface HouseRoommate {
+  id: number;
+  house_id: number;
+  user_id: string;
+  state: 'PENDING INVITATION' | 'ROOMATE';
+  created_at?: string;
+}
+
 export interface Roommate {
   id: string;
   name: string;
